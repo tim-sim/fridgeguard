@@ -5,35 +5,41 @@ import play.db.ebean.Model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import java.beans.Transient;
 import java.util.Date;
-import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author tim
  */
 @Entity
 public class Product extends Model {
+    public static Finder<Long, Product> finder = new Finder<>(Long.class, Product.class);
     @Id
-    private Long id;
-
-    private String name;
-
-    private Date purchaseDate;
-
+    public Long id;
+    public String name;
+    public Integer quantity;
+    public QuantityUnit quantityUnit;
+    public Date purchaseDate = new Date();
     @ManyToOne
-    private Fridge fridge;
+    public Fridge fridge;
 
-    private static Finder<Long, Product> finder = new Finder<>(Long.class, Product.class);
 
-    public static List<Product> getAll() {
-        return finder.all();
+    public Product() {
     }
 
-    public static Product getById(Long id) {
-        return finder.byId(id);
+    public Product(Fridge fridge) {
+        this.fridge = fridge;
     }
 
-    public static List<Product> getByFridge(Long fridgeId) {
-        return finder.where().eq("fridgeId", fridgeId).findList();
+    @Transient
+    public long getAge() {
+        return TimeUnit.MILLISECONDS.toDays(new Date().getTime() - purchaseDate.getTime());
+    }
+
+    public static enum QuantityUnit {
+        PIECES,
+        LITRES,
+        KILOS
     }
 }

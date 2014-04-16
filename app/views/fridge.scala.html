@@ -1,0 +1,10 @@
+@(fridgeForm: Form[Fridge])
+
+@import helper._
+
+@main("New fridge") {
+    @form(routes.Application.saveFridge()) {
+        @inputText(fridgeForm("name"))
+    }
+    <input type="submit" value="Add" class="btn bordered"/>
+}

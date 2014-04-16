@@ -1,21 +1,36 @@
-@(fridges: List[Fridge], newFridgeForm: Form[Fridge])
+@(data: MainPage)
 
-    @import helper._
 
-    @main("Fridge guard") {
-        <div class="content">
-            <div>
-                <div class="newFridgeForm">
-                    @form(routes.Application.saveFridge()) {
-                        @inputText(newFridgeForm("name"))
-                    }
-                    <input type="submit" value="add"/>
-                </div>
-            </div>
-            <div class="fridge-list">
-            @for(fridge <- fridges) {
+@main("Fridge guard") {
+    <div class="content clearfix">
+        <div class="fridge-list bordered">
+            <a class="btn bordered" href="@routes.Application.newFridge()">Add new fridge</a>
+            @for(fridge <- data.fridges) {
                 <div class="fridge-item">@fridge.name</div>
             }
-            </div>
         </div>
-    }
+        <div class="product-list bordered">
+            <a class="btn bordered" href="@routes.Application.newProduct(data.fridgeId)">Add new product</a>
+            @if(data.products != null && data.products.size() > 0) {
+                <table>
+                    <thead>
+                        <tr>
+                            <td>Product</td>
+                            <td>Quantity</td>
+                            <td>Age</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @for(product <- data.products) {
+                        <tr>
+                            <td>@product.name</td>
+                            <td>@product.quantity</td>
+                            <td>@product.getAge()</td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+}

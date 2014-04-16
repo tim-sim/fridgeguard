@@ -1,0 +1,43 @@
+div, p {
+    margin: 0;
+    padding: 0;
+}
+
+.content {
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.fridge-list {
+    float: left;
+    width: 200px;
+    min-height: 100px;
+}
+
+.product-list {
+    margin-left: 220px;
+    min-height: 100px;
+}
+
+.footer {
+    clear: both;
+}
+
+.clearfix:after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+.bordered {
+    border: solid 1px #ccc;
+    border-radius: 5px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 4px 10px 4px;
+    cursor: pointer;
+    text-decoration: none;
+}

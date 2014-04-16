@@ -1,0 +1,11 @@
+@(fridgeId: Long, productForm: Form[Product])
+
+@import helper._
+
+@main("New product") {
+    @form(routes.Application.saveProduct(fridgeId)) {
+        @inputText(productForm("name"))
+        @inputText(productForm("quantity"))
+    }
+    <input type="submit" value="Add" class="btn bordered"/>
+}
