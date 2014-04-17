@@ -8,12 +8,24 @@
 <div class="content">
     <div class="header bordered">Header</div>
     <div class="clearfix">
-        <div class="fridge-list column">
-            <div class="fridge-item"><a href="#">Fridge 1</a></div>
+        <div class="fridge-list">
+        <div class="fridge-item"><a href="#">Fridge 1</a></div>
             <div class="fridge-item"><a href="#">Fridge 2</a></div>
             <a class="btn" href="#">Add fridge</a>
         </div>
-        <div class="product-list column">
+        <div class="product-form">
+            <form action="#">
+                <input id="name" type="text" placeholder="Product"/>
+                <input id="quantity" type="text" placeholder="Quantity"/>
+                <select id="quantityUnit">
+                    <option value="1">Piece</option>
+                    <option value="2">Litre</option>
+                    <option value="3">Kilo</option>
+                </select>
+                <input class="btn" type="submit" value="Save"/>
+            </form>
+        </div>
+        <div class="product-list">
             <table>
                 <thead>
                 <tr>
@@ -21,6 +33,7 @@
                     <td>Product</td>
                     <td>Quantity</td>
                     <td>Age</td>
+                    <td>Expire</td>
                 </tr>
                 </thead>
                 <tbody>
@@ -32,6 +45,7 @@
                     <td>product 1</td>
                     <td>1 piece</td>
                     <td>1 day</td>
+                    <td>5 days</td>
                 </tr>
                 <tr>
                     <td>
@@ -41,6 +55,7 @@
                     <td>product 2</td>
                     <td>1 lt</td>
                     <td>2 days</td>
+                    <td>1 month</td>
                 </tr>
                 <tr>
                     <td>
@@ -50,10 +65,10 @@
                     <td>product 3</td>
                     <td>1 kg</td>
                     <td>3 days</td>
+                    <td>1 year</td>
                 </tr>
                 </tbody>
             </table>
-            <a class="btn" href="#">Add product</a>
         </div>
     </div>
     <div class="footer bordered">Footer</div>
