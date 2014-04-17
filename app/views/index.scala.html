@@ -2,19 +2,21 @@
 
 
 @main("Fridge guard") {
-    <div class="content clearfix">
-        <div class="fridge-list bordered">
-            <a class="btn bordered" href="@routes.Application.newFridge()">Add new fridge</a>
-            @for(fridge <- data.fridges) {
-                <div class="fridge-item">@fridge.name</div>
-            }
-        </div>
-        <div class="product-list bordered">
-            <a class="btn bordered" href="@routes.Application.newProduct(data.fridgeId)">Add new product</a>
+    <div class="content">
+        <div class="header bordered">Header</div>
+        <div class="clearfix">
+            <div class="fridge-list column">
+                @for(fridge <- data.fridges) {
+                    <div class="fridge-item"><a href="#">@fridge.name</a></div>
+                }
+                <a class="btn" href="@routes.Application.newFridge()">Add fridge</a>
+            </div>
+            <div class="product-list column">
             @if(data.products != null && data.products.size() > 0) {
                 <table>
                     <thead>
                         <tr>
+                            <td>Action</td>
                             <td>Product</td>
                             <td>Quantity</td>
                             <td>Age</td>
@@ -23,6 +25,10 @@
                     <tbody>
                     @for(product <- data.products) {
                         <tr>
+                            <td>
+                                <a href="#">Edit</a>
+                                <a href="#">Delete</a>
+                            </td>
                             <td>@product.name</td>
                             <td>@product.quantity</td>
                             <td>@product.getAge()</td>
@@ -30,7 +36,10 @@
                     }
                     </tbody>
                 </table>
+                <a class="btn" href="@routes.Application.newProduct(data.fridgeId)">Add product</a>
             }
+            </div>
         </div>
+        <div class="footer bordered">Footer</div>
     </div>
 }

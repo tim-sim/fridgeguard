@@ -1,27 +1,129 @@
+body {
+    margin: 0;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    color: #333;
+}
+
+a {
+    color: #08c;
+    text-decoration: none
+}
+
 div, p {
     margin: 0;
     padding: 0;
 }
 
+table {
+    font-size: 12px;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+thead {
+    background-color: #eee;
+    text-align: center;
+}
+
+td {
+    padding: 5px 15px;
+    border-right: 1px solid #ccc;
+}
+
+td:last-child {
+    border: none;
+}
+
+.btn {
+    display: inline-block;
+    padding: 4px 12px;
+    width: 70px;
+    text-align: center;
+    color: #333;
+    cursor: pointer;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.btn:hover {
+    color: #fff;
+    background-color: #ccc;
+}
+
+.btn:active {
+    color: #fff;
+    background-color: #aaa;
+}
+
 .content {
-    width: 800px;
+    width: 700px;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 20px;
+}
+
+.header, .footer {
+    min-height: 20px;
+    padding: 10px;
+}
+
+.column {
+    border-left: 1px solid #ccc;
+}
+
+.column:last-child {
+    border-right: 1px solid #ccc;
 }
 
 .fridge-list {
     float: left;
-    width: 200px;
-    min-height: 100px;
+    width: 132px;
+    min-height: 200px;
+}
+
+.fridge-list .btn {
+    margin: 20px;
+}
+
+.fridge-item {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.fridge-item a {
+    color: #333;
+}
+
+.fridge-item:hover {
+    background-color: #eee;
+    cursor: pointer;
+}
+
+.fridge-item:active {
+    background-color: #ccc;
+    cursor: pointer;
+}
+
+.fridge-item:active a {
+    color: #fff;
 }
 
 .product-list {
-    margin-left: 220px;
-    min-height: 100px;
+    margin-left: 132px;
+    min-height: 200px;
 }
 
-.footer {
-    clear: both;
+.product-list .btn {
+    display: inline-block;
+    vertical-align: top;
+    margin: 20px 0;
+}
+
+.product-list table {
+    display: inline-block;
+    margin: 20px;
 }
 
 .clearfix:after {
@@ -32,7 +134,6 @@ div, p {
 
 .bordered {
     border: solid 1px #ccc;
-    border-radius: 5px;
 }
 
 .btn {
