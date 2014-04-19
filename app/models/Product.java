@@ -14,12 +14,12 @@ import java.util.concurrent.TimeUnit;
  */
 @Entity
 public class Product extends Model {
-    public static Finder<Long, Product> finder = new Finder<>(Long.class, Product.class);
+    public static Finder<Long, Product> find = new Finder<>(Long.class, Product.class);
     @Id
     public Long id;
     public String name;
     public Integer quantity;
-    public QuantityUnit quantityUnit;
+    public QuantityUnit quantityUnit = QuantityUnit.PIECES;
     public Date purchaseDate = new Date();
     @ManyToOne
     public Fridge fridge;
@@ -32,14 +32,28 @@ public class Product extends Model {
         this.fridge = fridge;
     }
 
+    public static Product defaultItem() {
+        return new Product();
+    }
+
     @Transient
     public long getAge() {
         return TimeUnit.MILLISECONDS.toDays(new Date().getTime() - purchaseDate.getTime());
     }
 
     public static enum QuantityUnit {
-        PIECES,
-        LITRES,
-        KILOS
+        PIECES("Pieces"),
+        LITRES("Litres"),
+        KILOS("Kilos");
+
+        private String value;
+
+        QuantityUnit(String value) {
+            this.value = value;
+        }
+
+        public String getValue() {
+            return value;
+        }
     }
 }

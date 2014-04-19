@@ -1,49 +1,25 @@
 package controllers;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
 import models.Fridge;
-import models.MainPage;
+import models.PageModel;
 import models.Product;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.fridge;
 import views.html.index;
-import views.html.product;
-
-import javax.annotation.Nullable;
 
 public class Application extends Controller {
-    public static Result root() {
-        return redirect(routes.Application.index(-1));
+    /*
+     * GET /
+     */
+    public static Result home() {
+        final PageModel pageModel = new PageModel();
+        return ok(index.render(pageModel));
     }
 
-    public static Result index(Long fridgeId) {
-        final MainPage mainPage = new MainPage();
-        mainPage.fridges = Fridge.find.all();
-        mainPage.fridgeId = fridgeId;
-        if (mainPage.fridges.size() > 0) {
-            mainPage.products = Iterables.find(mainPage.fridges, new Predicate<Fridge>() {
-                @Override
-                public boolean apply(@Nullable Fridge fridge) {
-                    return fridge.id == mainPage.fridgeId;
-                }
-            }, Fridge.empty()).products;
-        }
-        return ok(index.render(mainPage));
-    }
-
-    public static Result newFridge() {
-        Form<Fridge> form = Form.form(Fridge.class);
-        return ok(fridge.render(form));
-    }
-
-    public static Result newProduct(Long fridgeId) {
-        Form<Product> form = Form.form(Product.class);
-        return ok(product.render(fridgeId, form));
-    }
-
+    /*
+     * POST /
+     */
     public static Result saveFridge() {
         Form<Fridge> form = Form.form(Fridge.class).bindFromRequest();
         Fridge fridge = form.get();
@@ -51,11 +27,46 @@ public class Application extends Controller {
         return redirect(routes.Application.index(fridge.id));
     }
 
+    /*
+     * GET /:fridgeId
+     */
+    public static Result index(Long fridgeId) {
+        final PageModel pageModel = new PageModel(fridgeId);
+        return ok(index.render(pageModel));
+    }
+
+
+    /*
+     * POST /:fridgeId
+     */
     public static Result saveProduct(Long fridgeId) {
         Form<Product> form = Form.form(Product.class).bindFromRequest();
         Product product = form.get();
         product.fridge = Fridge.find.byId(fridgeId);
-        product.save();
+        if (product.id == null) {
+            product.save();
+        } else {
+            product.update();
+        }
+        return redirect(routes.Application.index(fridgeId));
+    }
+
+    /*
+     * GET /:fridgeId/:productId
+     */
+    public static Result editProduct(Long fridgeId, Long productId) {
+        PageModel pageModel = new PageModel(fridgeId, productId);
+        return ok(index.render(pageModel));
+    }
+
+    /*
+     * GET /:fridgeId/:productId/delete
+     */
+    public static Result deleteProduct(Long fridgeId, Long productId) {
+        Product product = Product.find.byId(productId);
+        if (product != null) {
+            product.delete();
+        }
         return redirect(routes.Application.index(fridgeId));
     }
 }

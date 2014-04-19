@@ -1,18 +1,40 @@
-@(data: MainPage)
+@(data: PageModel)
+@import models.Product.QuantityUnit
 
+
+    @selected(isSelected: Boolean) = {
+    @if(isSelected) {
+        selected
+    } else {
+        ''
+    }
+    }
 
 @main("Fridge guard") {
     <div class="content">
         <div class="header bordered">Header</div>
         <div class="clearfix">
-            <div class="fridge-list column">
-                @for(fridge <- data.fridges) {
-                    <div class="fridge-item"><a href="#">@fridge.name</a></div>
+            <div class="fridge-list">
+                @for(fridge <- data.allFridges) {
+                    <a href="@routes.Application.index(fridge.id)"><div class="fridge-item">@fridge.name</div></a>
                 }
-                <a class="btn" href="@routes.Application.newFridge()">Add fridge</a>
+                <a class="btn" href="@routes.Application.saveFridge()">Save fridge</a>
             </div>
-            <div class="product-list column">
-            @if(data.products != null && data.products.size() > 0) {
+            <div class="product-form">
+                <form action="@routes.Application.saveProduct(data.activeFridge.id)" method="post">
+                    <input id="id" name="id" type="hidden" value="@data.activeProduct.id"/>
+                    <input id="name" name ="name" type="text" placeholder="Product" value="@data.activeProduct.name"/>
+                    <input id="quantity" name="quantity" type="text" placeholder="Quantity" value="@data.activeProduct.quantity"/>
+                    <select id="quantityUnit" name="quantityUnit">
+                    @for(unit <- QuantityUnit.values()) {
+                        <option @selected(unit.getValue() == data.activeProduct.quantityUnit.getValue()) value="@unit.name()">@unit.getValue()</option>
+                    }
+                    </select>
+                    <input class="btn" type="submit" value="Save product"/>
+                </form>
+            </div>
+            <div class="product-list">
+            @if(data.activeFridge.products.size() > 0) {
                 <table>
                     <thead>
                         <tr>
@@ -20,23 +42,25 @@
                             <td>Product</td>
                             <td>Quantity</td>
                             <td>Age</td>
+                            <td>Expire</td>
                         </tr>
                     </thead>
                     <tbody>
-                    @for(product <- data.products) {
+                    @for(product <- data.activeFridge.products) {
                         <tr>
                             <td>
-                                <a href="#">Edit</a>
-                                <a href="#">Delete</a>
+                                <a href="@routes.Application.editProduct(data.activeFridge.id, product.id)">edit</a>
+                                |
+                                <a href="@routes.Application.deleteProduct(data.activeFridge.id, product.id)">delete</a>
                             </td>
                             <td>@product.name</td>
                             <td>@product.quantity</td>
                             <td>@product.getAge()</td>
+                            <td></td>
                         </tr>
                     }
                     </tbody>
                 </table>
-                <a class="btn" href="@routes.Application.newProduct(data.fridgeId)">Add product</a>
             }
             </div>
         </div>

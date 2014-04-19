@@ -24,7 +24,13 @@ public class Fridge extends Model {
     @OneToMany(fetch = FetchType.LAZY)
     public List<Product> products = Lists.newArrayList();
 
-    public static Fridge empty() {
-        return new Fridge();
+    public static Fridge defaultItem() {
+        Fridge defaultFridge = find.byId(1l);
+        if (defaultFridge == null) {
+            defaultFridge = new Fridge();
+            defaultFridge.name = "Default";
+            defaultFridge.save();
+        }
+        return defaultFridge;
     }
 }

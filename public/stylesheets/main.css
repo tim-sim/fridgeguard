@@ -29,7 +29,7 @@ input, select {
 .btn {
     display: inline-block;
     padding: 4px 12px;
-    width: 70px;
+    min-width: 70px;
     text-align: center;
     color: #333;
     cursor: pointer;
@@ -101,7 +101,7 @@ input, select {
 
 .product-list {
     margin-left: 155px;
-    margin-right: 155px;
+    margin-right: 205px;
     min-height: 200px;
 }
 
@@ -138,21 +138,18 @@ input, select {
     border-right: 1px solid #ccc;
 }
 
-.product-form input[type="text"] {
+.product-form input {
     display: inline-block;
     outline: none;
     border: 1px solid #aaa;
 }
 
-.product-form input#name {
-    width: 180px;
-}
-
 .product-form input#quantity {
-    width: 90px;
+    width: 85px;
 }
 
 .product-form select#quantityUnit {
+    margin-left: 0;
     display: inline-block;
 }
 
