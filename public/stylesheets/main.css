@@ -67,7 +67,7 @@ input, select {
 .fridge-list {
     float: left;
     width: 150px;
-    min-height: 200px;
+    min-height: 250px;
     border-left: 1px solid #ccc;
     border-right: 1px solid #ccc;
 }
@@ -102,7 +102,6 @@ input, select {
 .product-list {
     margin-left: 155px;
     margin-right: 205px;
-    min-height: 200px;
 }
 
 .product-list .btn {
@@ -133,7 +132,7 @@ input, select {
 .product-form {
     float: right;
     width: 200px;
-    min-height: 200px;
+    min-height: 250px;
     border-left: 1px solid #ccc;
     border-right: 1px solid #ccc;
 }

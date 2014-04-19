@@ -30,6 +30,8 @@
                         <option @selected(unit.getValue() == data.activeProduct.quantityUnit.getValue()) value="@unit.name()">@unit.getValue()</option>
                     }
                     </select>
+                    <input id="purchaseDate" name="purchaseDate" type="text" placeholder="Purchase date"/>
+                    <input id="expireDate" name="expireDate" type="text" placeholder="Expire date"/>
                     <input class="btn" type="submit" value="Save product"/>
                 </form>
             </div>

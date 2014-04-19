@@ -38,7 +38,7 @@ public class Product extends Model {
 
     @Transient
     public long getAge() {
-        return TimeUnit.MILLISECONDS.toDays(new Date().getTime() - purchaseDate.getTime());
+        return purchaseDate != null ? TimeUnit.MILLISECONDS.toDays(new Date().getTime() - purchaseDate.getTime()) : 0;
     }
 
     public static enum QuantityUnit {
