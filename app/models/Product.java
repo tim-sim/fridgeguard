@@ -1,5 +1,7 @@
 package models;
 
+import play.data.format.Formats;
+import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
 import javax.persistence.Entity;
@@ -14,16 +16,20 @@ import java.util.concurrent.TimeUnit;
  */
 @Entity
 public class Product extends Model {
+    public static final String DATE_FORMAT = "yyyy-MM-dd";
     public static Finder<Long, Product> find = new Finder<>(Long.class, Product.class);
     @Id
     public Long id;
+    @Constraints.Required
     public String name;
     public Integer quantity;
     public QuantityUnit quantityUnit = QuantityUnit.PIECES;
-    public Date purchaseDate = new Date();
+    @Formats.DateTime(pattern = DATE_FORMAT)
+    public Date productionDate;
+    @Formats.DateTime(pattern = DATE_FORMAT)
+    public Date expirationDate;
     @ManyToOne
     public Fridge fridge;
-
 
     public Product() {
     }
@@ -37,23 +43,27 @@ public class Product extends Model {
     }
 
     @Transient
-    public long getAge() {
-        return purchaseDate != null ? TimeUnit.MILLISECONDS.toDays(new Date().getTime() - purchaseDate.getTime()) : 0;
+    public Long age() {
+        return productionDate != null ? TimeUnit.MILLISECONDS.toDays(new Date().getTime() - productionDate.getTime()) : null;
+    }
+
+    @Transient
+    public Long lifeTime() {
+        return expirationDate != null ? TimeUnit.MILLISECONDS.toDays(expirationDate.getTime() - new Date().getTime()) : null;
     }
 
     public static enum QuantityUnit {
-        PIECES("Pieces"),
-        LITRES("Litres"),
-        KILOS("Kilos");
+        PIECES("Piece", "Pieces"),
+        PACKS("Pack", "Packs"),
+        LITRES("Litre", "Litres"),
+        KILOS("Kilo", "Kilos");
 
-        private String value;
+        public String singleValue;
+        public String multipleValue;
 
-        QuantityUnit(String value) {
-            this.value = value;
-        }
-
-        public String getValue() {
-            return value;
+        QuantityUnit(String singleValue, String mutipleValue) {
+            this.singleValue = singleValue;
+            this.multipleValue = mutipleValue;
         }
     }
 }

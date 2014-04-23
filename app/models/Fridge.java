@@ -4,10 +4,7 @@ import com.google.common.collect.Lists;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -21,7 +18,7 @@ public class Fridge extends Model {
     public Long id;
     @Constraints.Required
     public String name;
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public List<Product> products = Lists.newArrayList();
 
     public static Fridge defaultItem() {

@@ -1,64 +1,70 @@
-@(data: PageModel)
+@(model: PageModel)
 @import models.Product.QuantityUnit
 
 
     @selected(isSelected: Boolean) = {
     @if(isSelected) {
         selected
-    } else {
-        ''
     }
+    }
+
+    @formatQuantity(product: models.Product) = @{
+        var quantityUnitStr = if(1.equals(product.quantity)) product.quantityUnit.singleValue else product.quantityUnit.multipleValue
+        product.quantity.toString + " " + quantityUnitStr
     }
 
 @main("Fridge guard") {
     <div class="content">
         <div class="header bordered">Header</div>
-        <div class="clearfix">
+        <div class="clear">
             <div class="fridge-list">
-                @for(fridge <- data.allFridges) {
+                @for(fridge <- model.allFridges) {
                     <a href="@routes.Application.index(fridge.id)"><div class="fridge-item">@fridge.name</div></a>
                 }
-                <a class="btn" href="@routes.Application.saveFridge()">Save fridge</a>
+                <form id="fridgeForm" action="@routes.Application.saveFridge()" method="post">
+                    <input id="fridgeName" name ="name" type="text" placeholder="Fridge" hidden="hidden"/>
+                    <input id="fridgeSubmit" class="btn" type="submit" value="Add fridge"/>
+                </form>
             </div>
             <div class="product-form">
-                <form action="@routes.Application.saveProduct(data.activeFridge.id)" method="post">
-                    <input id="id" name="id" type="hidden" value="@data.activeProduct.id"/>
-                    <input id="name" name ="name" type="text" placeholder="Product" value="@data.activeProduct.name"/>
-                    <input id="quantity" name="quantity" type="text" placeholder="Quantity" value="@data.activeProduct.quantity"/>
+                <form id="productForm" action="@routes.Application.saveProduct(model.fridge.id)" method="post">
+                    <input id="id" name="id" type="hidden" value="@model.productForm("id").value"/>
+                    <input id="name" name ="name" type="text" autocomplete="off" placeholder="Product" value="@model.productForm("name").value"/>
+                    <input id="quantity" name="quantity" type="text" autocomplete="off" placeholder="Quantity" value="@model.productForm("quantity").value"/>
                     <select id="quantityUnit" name="quantityUnit">
                     @for(unit <- QuantityUnit.values()) {
-                        <option @selected(unit.getValue() == data.activeProduct.quantityUnit.getValue()) value="@unit.name()">@unit.getValue()</option>
+                        <option @selected(unit.name() == model.productForm("quantityUnit").value) value="@unit.name()">@unit.multipleValue</option>
                     }
                     </select>
-                    <input id="purchaseDate" name="purchaseDate" type="text" placeholder="Purchase date"/>
-                    <input id="expireDate" name="expireDate" type="text" placeholder="Expire date"/>
-                    <input class="btn" type="submit" value="Save product"/>
+                    <input id="productionDate" name="productionDate" type="text" autocomplete="off" placeholder="Production date" value="@model.productForm("productionDate").value"/>
+                    <input id="expirationDate" name="expirationDate" type="text" autocomplete="off" placeholder="Expiration date" value="@model.productForm("expirationDate").value"/>
+                    <input class="btn" type="submit" value="Save product"/><input id="fridgeFormResetBt" class="btn" type="reset" value="Clear"/>
                 </form>
             </div>
             <div class="product-list">
-            @if(data.activeFridge.products.size() > 0) {
+            @if(model.fridge.products.size() > 0) {
                 <table>
                     <thead>
                         <tr>
-                            <td>Action</td>
-                            <td>Product</td>
-                            <td>Quantity</td>
-                            <td>Age</td>
-                            <td>Expire</td>
+                            <th>Action</th>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Age</th>
+                            <th>Life time</th>
                         </tr>
                     </thead>
                     <tbody>
-                    @for(product <- data.activeFridge.products) {
+                    @for(product <- model.fridge.products) {
                         <tr>
                             <td>
-                                <a href="@routes.Application.editProduct(data.activeFridge.id, product.id)">edit</a>
-                                |
-                                <a href="@routes.Application.deleteProduct(data.activeFridge.id, product.id)">delete</a>
+                                <a href="@routes.Application.editProduct(model.fridge.id, product.id)">edit</a>
+                            |
+                                <a href="@routes.Application.deleteProduct(model.fridge.id, product.id)">delete</a>
                             </td>
                             <td>@product.name</td>
-                            <td>@product.quantity</td>
-                            <td>@product.getAge()</td>
-                            <td></td>
+                            <td>@formatQuantity(product)</td>
+                            <td>@product.age()</td>
+                            <td>@product.lifeTime()</td>
                         </tr>
                     }
                     </tbody>

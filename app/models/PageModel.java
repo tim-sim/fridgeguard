@@ -1,5 +1,7 @@
 package models;
 
+import play.data.Form;
+
 import java.util.List;
 
 /**
@@ -8,28 +10,29 @@ import java.util.List;
 public class PageModel {
     public List<Fridge> allFridges;
 
-    public Fridge activeFridge;
+    public Fridge fridge;
 
-    public Product activeProduct;
+    public Form<Fridge> fridgeForm;
+    public Form<Product> productForm;
 
     public PageModel() {
         this.allFridges = Fridge.find.all();
-        this.activeFridge = Fridge.defaultItem();
-        this.activeProduct = Product.defaultItem();
+        this.fridge = Fridge.defaultItem();
+        productForm = Form.form(Product.class);
     }
 
     public PageModel(final Long fridgeId) {
         this.allFridges = Fridge.find.all();
-        this.activeFridge = Fridge.find.byId(fridgeId);
-        if (activeFridge == null) {
-            activeFridge = Fridge.defaultItem();
+        this.fridge = Fridge.find.byId(fridgeId);
+        if (fridge == null) {
+            fridge = Fridge.defaultItem();
         }
-        this.activeProduct = Product.defaultItem();
+        productForm = Form.form(Product.class);
     }
 
     public PageModel(final Long fridgeId, final Long productId) {
         this.allFridges = Fridge.find.all();
-        this.activeFridge = Fridge.find.byId(fridgeId);
-        this.activeProduct = Product.find.byId(productId);
+        this.fridge = Fridge.find.byId(fridgeId);
+        productForm = Form.form(Product.class).fill(Product.find.byId(productId));
     }
 }
