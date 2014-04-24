@@ -1,7 +1,7 @@
 package controllers;
 
 import models.Fridge;
-import models.PageModel;
+import models.Model;
 import models.Product;
 import play.data.Form;
 import play.mvc.Controller;
@@ -12,9 +12,18 @@ public class Application extends Controller {
     /*
      * GET /
      */
-    public static Result home() {
-        final PageModel pageModel = new PageModel();
-        return ok(index.render(pageModel));
+    public static Result index() {
+        final Model model = new Model();
+        return ok(index.render(model));
+    }
+
+    /*
+     * GET /:fridgeId/edit
+     */
+    public static Result editFridge(Long fridgeId) {
+        Model model = new Model(fridgeId);
+        model.initFridgeForm();
+        return ok(index.render(model));
     }
 
     /*
@@ -22,25 +31,54 @@ public class Application extends Controller {
      */
     public static Result saveFridge() {
         Form<Fridge> form = Form.form(Fridge.class).bindFromRequest();
+        if (form.hasErrors()) {
+            Long fridgeId = null;
+            if (form.data().containsKey("id")) {
+                fridgeId = Long.valueOf(form.data().get("id"));
+            }
+            redirect(routes.Application.editFridge(fridgeId));
+        }
         Fridge fridge = form.get();
-        fridge.save();
-        return redirect(routes.Application.index(fridge.id));
+        if (fridge.id == null) {
+            fridge.save();
+        } else {
+            fridge.update();
+        }
+        return redirect(routes.Application.openFridge(fridge.id));
     }
 
     /*
      * GET /:fridgeId
      */
-    public static Result index(Long fridgeId) {
-        final PageModel pageModel = new PageModel(fridgeId);
-        return ok(index.render(pageModel));
+    public static Result openFridge(Long fridgeId) {
+        final Model model = new Model(fridgeId);
+        model.initProductForm();
+        return ok(index.render(model));
     }
 
+    /*
+     * GET /:fridgeId/delete
+     */
+    public static Result deleteFridge(Long fridgeId) {
+        Fridge fridge = Fridge.find.byId(fridgeId);
+        if (fridge != null) {
+            fridge.delete();
+        }
+        return redirect(routes.Application.index());
+    }
 
     /*
      * POST /:fridgeId
      */
     public static Result saveProduct(Long fridgeId) {
         Form<Product> form = Form.form(Product.class).bindFromRequest();
+        if (form.hasErrors()) {
+            Long productId = null;
+            if (form.data().containsKey("id")) {
+                productId = Long.valueOf(form.data().get("id"));
+            }
+            redirect(routes.Application.editProduct(fridgeId, productId));
+        }
         Product product = form.get();
         product.fridge = Fridge.find.byId(fridgeId);
         if (product.id == null) {
@@ -48,15 +86,16 @@ public class Application extends Controller {
         } else {
             product.update();
         }
-        return redirect(routes.Application.index(fridgeId));
+        return redirect(routes.Application.openFridge(fridgeId));
     }
 
     /*
-     * GET /:fridgeId/:productId
+     * GET /:fridgeId/:productId/edit
      */
     public static Result editProduct(Long fridgeId, Long productId) {
-        PageModel pageModel = new PageModel(fridgeId, productId);
-        return ok(index.render(pageModel));
+        Model model = new Model(fridgeId, productId);
+        model.initProductForm();
+        return ok(index.render(model));
     }
 
     /*
@@ -67,6 +106,6 @@ public class Application extends Controller {
         if (product != null) {
             product.delete();
         }
-        return redirect(routes.Application.index(fridgeId));
+        return redirect(routes.Application.openFridge(fridgeId));
     }
 }

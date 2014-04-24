@@ -18,7 +18,7 @@ public class Fridge extends Model {
     public Long id;
     @Constraints.Required
     public String name;
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     public List<Product> products = Lists.newArrayList();
 
     public static Fridge defaultItem() {
@@ -29,5 +29,10 @@ public class Fridge extends Model {
             defaultFridge.save();
         }
         return defaultFridge;
+    }
+
+    @Transient
+    public boolean isEmpty() {
+        return products.isEmpty();
     }
 }

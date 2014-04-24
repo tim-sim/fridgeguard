@@ -1,38 +1,36 @@
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
 body {
-    margin: 0;
     font-family: Helvetica, Arial, sans-serif;
-    font-size: 1em;
-    color: #333;
-}
-
-a {
-    color: #08c;
-    text-decoration: none
-}
-
-div, p {
-    margin: 0;
-    padding: 0;
 }
 
 table {
-    width: 90%;
     border-spacing: 0;
     border-collapse: collapse;
+    width: 100%;
 }
 
 input, select {
-    margin: 1em;
+    margin-bottom: 1em;
     padding: 0.5em;
+    display: inline-block;
 }
 
 input[type="text"] {
-    outline: none;
     border: 1px solid #aaa;
+    width: 100%;
 }
 
 select {
     border-radius: 4px;
+}
+
+select option {
+    padding: 0.5em;
 }
 
 .btn {
@@ -68,20 +66,27 @@ select {
     padding: 1em;
 }
 
+.block {
+    padding: 1em;
+}
+
+.column {
+    margin: 0;
+    padding: 0;
+    float: left;
+    min-height: 20em;
+    border-left: 1px solid #ccc;
+}
+
 .column:last-child {
     border-right: 1px solid #ccc;
 }
 
-.fridge-list {
-    float: left;
-    width: 10em;
-    min-height: 20em;
-    border-left: 1px solid #ccc;
-    border-right: 1px solid #ccc;
-}
-
-.fridge-list .btn {
-    margin: 2em;
+/**
+ * Fridges list
+ */
+.fridge-column {
+    width: 20%;
 }
 
 .fridge-item {
@@ -89,68 +94,67 @@ select {
     border-bottom: 1px solid #ccc;
 }
 
-.fridge-item a {
-    color: #333;
+.fridge-info {
+    margin: 1em;
 }
 
-.fridge-item:hover {
-    background-color: #eee;
-    cursor: pointer;
+/*
+ * Forms column
+ */
+.forms-column {
+    width: 25%;
 }
 
-.fridge-item:active {
-    background-color: #ccc;
-    cursor: pointer;
+.forms-column input#productQuantity {
+    width: 40%;
 }
 
-.fridge-item:active a {
-    color: #fff;
+.forms-column select#productUnit {
+    width: 40%;
+    margin-left: 1em;
 }
 
-.product-list {
-    margin-left: 11em;
-    margin-right: 15em;
+.forms-column input#productFormClearBt {
+    margin-left: 1em;
 }
 
-.product-list table {
-    display: inline-block;
-    margin: 2em;
+/**
+ * Products list
+ */
+.product-column {
+    width: 55%;
+    float: right;
 }
 
-.product-list th {
+.product-column th {
     background-color: #eee;
     text-align: center;
+    padding: 0.5em;
 }
 
-.product-list th, .product-list td {
-    padding: 0.5em 1em;
+.product-column td {
+    padding: 0.7em;
+}
+
+.product-column th, .product-column td {
     border-right: 1px solid #ccc;
 }
 
-.product-list th:last-child, .product-list td:last-child {
+.product-column th:last-child, .product-column td:last-child {
     border: none;
 }
 
-.product-form {
+/**
+ * Common styles
+ */
+
+.small {
+    font-size: 0.8em;
+    padding: 0.2em 0.5em;
+}
+
+.right {
     float: right;
-    width: 14em;
-    min-height: 20em;
-    border-left: 1px solid #ccc;
-    border-right: 1px solid #ccc;
-}
-
-.product-form input {
-    display: inline-block;
-}
-
-.product-form input#quantity {
-    width: 4em;
-}
-
-.product-form select#quantityUnit {
-    width: 8em;
-    margin-left: 0;
-    display: inline-block;
 }
 
 .clear:after {
