@@ -36,9 +36,9 @@
                         <option @selected(unit.name() == model.productForm("quantityUnit").value) value="@unit.name()">@unit.multipleValue</option>
                     }
                     </select>
-                    <input id="productionDate" name="productionDate" type="text" autocomplete="off" placeholder="Production date" value="@model.productForm("productionDate").value"/>
-                    <input id="expirationDate" name="expirationDate" type="text" autocomplete="off" placeholder="Expiration date" value="@model.productForm("expirationDate").value"/>
-                    <input class="btn" type="submit" value="Save product"/><input id="fridgeFormResetBt" class="btn" type="reset" value="Clear"/>
+                    <input id="productionDate" name="productionDate" type="text" autocomplete="off" placeholder="@Messages("product.productionDate")" value="@model.productForm("productionDate").value"/>
+                    <input id="expirationDate" name="expirationDate" type="text" autocomplete="off" placeholder="@Messages" value="@model.productForm("expirationDate").value"/>
+                    <input class="btn" type="submit" value="@Messages("form.save")"/><input id="fridgeFormResetBt" class="btn" type="reset" value="@Messages("form.clear")"/>
                 </form>
             </div>
             <div class="product-list">
