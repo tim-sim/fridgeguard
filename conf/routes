@@ -3,11 +3,13 @@
 # ~~~~
 
 # Home page
-GET         /                                   controllers.Application.home()
+GET         /                                   controllers.Application.index()
 POST        /                                   controllers.Application.saveFridge()
-GET         /:fridgeId                          controllers.Application.index(fridgeId: Long)
+GET         /:fridgeId                          controllers.Application.openFridge(fridgeId: Long)
+GET         /:fridgeId/edit                     controllers.Application.editFridge(fridgeId: Long)
+GET         /:fridgeId/delete                   controllers.Application.deleteFridge(fridgeId: Long)
 POST        /:fridgeId                          controllers.Application.saveProduct(fridgeId: Long)
-GET         /:fridgeId/:productId               controllers.Application.editProduct(fridgeId: Long, productId: Long)
+GET         /:fridgeId/:productId/edit          controllers.Application.editProduct(fridgeId: Long, productId: Long)
 GET         /:fridgeId/:productId/delete        controllers.Application.deleteProduct(fridgeId: Long, productId: Long)
 
 # Map static resources from the /public folder to the /assets URL path
