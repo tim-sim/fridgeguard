@@ -5,6 +5,7 @@
 # Home page
 GET         /                                   controllers.Application.index()
 POST        /                                   controllers.Application.saveFridge()
+GET         /add                                controllers.Application.addFridge()
 GET         /:fridgeId                          controllers.Application.openFridge(fridgeId: Long)
 GET         /:fridgeId/edit                     controllers.Application.editFridge(fridgeId: Long)
 GET         /:fridgeId/delete                   controllers.Application.deleteFridge(fridgeId: Long)

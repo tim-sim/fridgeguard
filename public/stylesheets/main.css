@@ -2,10 +2,8 @@
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-}
-
-body {
     font-family: Helvetica, Arial, sans-serif;
+    font-size: 14px;
 }
 
 table {
@@ -26,7 +24,7 @@ input[type="text"] {
 }
 
 select {
-    border-radius: 4px;
+    background-color: #ffffff;
 }
 
 select option {
@@ -94,6 +92,10 @@ select option {
     border-bottom: 1px solid #ccc;
 }
 
+.fridge-item:last-child {
+    border-bottom: none;
+}
+
 .fridge-info {
     margin: 1em;
 }
@@ -110,7 +112,7 @@ select option {
 }
 
 .forms-column select#productUnit {
-    width: 40%;
+    width: 50%;
     margin-left: 1em;
 }
 
@@ -149,7 +151,7 @@ select option {
  */
 
 .small {
-    font-size: 0.8em;
+    font-size: 12px;
     padding: 0.2em 0.5em;
 }
 
@@ -165,4 +167,13 @@ select option {
 
 .bordered {
     border: solid 1px #ccc;
+}
+
+.nounderline {
+    text-decoration: none;
+}
+
+.info-message {
+    text-align: center;
+    color: #777;
 }

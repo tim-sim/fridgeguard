@@ -3,12 +3,22 @@ package controllers;
 import models.Fridge;
 import models.Model;
 import models.Product;
+import models.User;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+import views.html.helper.form;
 import views.html.index;
+import views.html.login;
 
 public class Application extends Controller {
+    /*
+     * GET /login
+     */
+    public static Result login() {
+        return ok(login.render(Form.form(User.class)));
+    }
+
     /*
      * GET /
      */
@@ -22,6 +32,15 @@ public class Application extends Controller {
      */
     public static Result editFridge(Long fridgeId) {
         Model model = new Model(fridgeId);
+        model.initFridgeForm();
+        return ok(index.render(model));
+    }
+
+    /*
+     * GET /add
+     */
+    public static Result addFridge() {
+        Model model = new Model();
         model.initFridgeForm();
         return ok(index.render(model));
     }

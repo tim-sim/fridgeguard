@@ -1,4 +1,24 @@
+fridge.name=Fridge
+fridge.no_items=no fridges
+
+product.name=Product
+product.quantity=Quantity
+product.unit.single.piece=piece
+product.unit.multiple.piece=pieces
+product.unit.single.pack=pack
+product.unit.multiple.pack=packs
+product.unit.single.litre=litre
+product.unit.multiple.litre=litres
+product.unit.single.kilo=kilo
+product.unit.multiple.kilo=kilos
 product.productionDate=Production date
 product.expirationDate=Expiration date
-form.save=Save
-form.clear=Clear
+product.age=Age
+product.life=Life time
+
+ref.action.edit=edit
+ref.action.delete=delete
+ref.action.addFridge=Add fridge
+form.action.save=Save
+form.action.clear=Clear
+form.action.cancel=Cancel

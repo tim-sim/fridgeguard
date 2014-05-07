@@ -53,17 +53,17 @@ public class Product extends Model {
     }
 
     public static enum QuantityUnit {
-        PIECES("Piece", "Pieces"),
-        PACKS("Pack", "Packs"),
-        LITRES("Litre", "Litres"),
-        KILOS("Kilo", "Kilos");
+        PIECES("piece"),
+        PACKS("pack"),
+        LITRES("litre"),
+        KILOS("kilo");
 
         public String singleValue;
         public String multipleValue;
 
-        QuantityUnit(String singleValue, String mutipleValue) {
-            this.singleValue = singleValue;
-            this.multipleValue = mutipleValue;
+        QuantityUnit(String propertyName) {
+            this.singleValue = "product.unit.single." + propertyName;
+            this.multipleValue = "product.unit.multiple." + propertyName;
         }
     }
 }
